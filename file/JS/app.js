@@ -1,19 +1,26 @@
-// all post:    https://openapi.programming-hero.com/api/retro-forum/posts
-// all post:    https://openapi.programming-hero.com/api/retro-forum/posts?category=
-// latest post: https://openapi.programming-hero.com/api/retro-forum/latest-posts 
-
-
-// search-field
-// all-post-loading-spinner
-// latest-post-loading-spinner
-// all-post-container
-// latest-post-container
-// mark-as-read-list
-// read-count
-
 
 let readCount = 0;
 
+
+
+// Search Field...
+const searchField = document.getElementById('search-field');
+const handleSearch = () => {
+    const searchText = searchField.value;
+    loadAllPost(searchText);
+    searchField.value = '';
+};
+searchField.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault(); 
+        handleSearch();
+    }
+});
+
+
+
+
+// Load All Post / category wise...
 const loadAllPost = async (category='') => {
     document.getElementById('all-post-loading-spinner').classList.remove('hidden');
     document.getElementById('all-post-container').classList.add('hidden');
@@ -24,22 +31,29 @@ const loadAllPost = async (category='') => {
 
     setTimeout(() => {    
         document.getElementById('all-post-container').classList.remove('hidden');
-        displayAllPost(allPost);
+        displayAllPost(allPost, category);
         document.getElementById('all-post-loading-spinner').classList.add('hidden');
     }, 2000);
 };
 loadAllPost();
 
-const displayAllPost = (allPost) => {
-    console.log(allPost.length);
+const displayAllPost = (allPost, category) => {
+    // console.log(category);
     const allPostContainer = document.getElementById('all-post-container');
-    // console.log(allPostContainer);
     allPostContainer.textContent = '';
+    if(allPost.length==0){
+        const notFound = document.createElement('div');
+        notFound.classList = `text-center my-20 `;
+        notFound.innerHTML = `
+            <h1 class="text-3xl font-extrabold text-red-600">Oops!!</h1>
+            <p class="text-3xl font-bold mx-auto md:mx-[20%]">
+                Search Result '${category}' Not Found 
+            </p>
+        `;
+        allPostContainer.appendChild(notFound);
+    }
 
     allPost.forEach(post => {
-        // console.log(post);
-        // console.log(post.isActive);
-
         const postCard = document.createElement('div');
         postCard.classList = `flex items-start bg-gray-100 p-4 rounded-lg m-1`;
         postCard.innerHTML = `
@@ -85,7 +99,6 @@ const displayAllPost = (allPost) => {
 };
 
 const handleMarkAsRead = (title, view_count) =>{
-    // console.log(title,view_count);
     const markRead = document.getElementById('mark-as-read-list');
     const createList = document.createElement('li');
     createList.classList = `flex items-center justify-between text-sm bg-white rounded-lg p-2`;
@@ -107,24 +120,8 @@ const setReadCount = () =>{
 
 
 
-const searchField = document.getElementById('search-field');
-const handleSearch = () => {
-    const searchText = searchField.value;
-    console.log(searchText);
-    loadAllPost(searchText);
-    searchField.value = '';
-};
-// Attach event listener for Enter key press
-searchField.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        event.preventDefault(); // Prevent form submission if within a form
-        handleSearch();
-    }
-});
 
-
-
-
+// Latest Post Part...
 const loadLatestPost = async () =>{
     document.getElementById('latest-post-loading-spinner').classList.remove('hidden');
     document.getElementById('latest-post-container').classList.add('hidden');
@@ -138,16 +135,13 @@ const loadLatestPost = async () =>{
         displayLatestPost(allPost);
         document.getElementById('latest-post-loading-spinner').classList.add('hidden');
     }, 2000);
-    // displayLatestPost(allPost);
 };
 loadLatestPost();
 
 const displayLatestPost = (allPost) =>{
-    // console.log(allPost);
     const latestPostContainer = document.getElementById('latest-post-container');
     latestPostContainer.textContent = '';
     allPost.forEach(post => {
-        // console.log(post);
         const postCard = document.createElement('div');
         postCard.classList = `card bg-white border rounded-lg overflow-hidden`;
         postCard.innerHTML = `
@@ -177,8 +171,4 @@ const displayLatestPost = (allPost) =>{
         latestPostContainer.appendChild(postCard);
     });
 };
-
-
-
-
-
+ 

@@ -4,12 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ReTro</title>
+
+    <!-- Tailwind CSS + daisyUI -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Font Awesome Kit -->
     <script src="https://kit.fontawesome.com/324105796f.js" crossorigin="anonymous"></script>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .mulish-font {
+            font-family: "Mulish", sans-serif;
+        }
+    </style>
 
     <!-- Tailwind Custom classes -->
     <script>
@@ -18,7 +36,6 @@
                 extend: {
                     colors: {
                         'btn-color': '#797DFC',
-                        'btn-color-hover': '#EA302E',
                     }
                 }
             }
@@ -27,13 +44,11 @@
 
 </head>
 
-<body>
+<body class="mulish-font">
     <!-- Header Part -->
     <header class="max-w-screen-xl mx-auto container">
-
         <!-- NavBar -->
         <nav class="navbar bg-base-100 h-28">
-
             <!-- Mobile menu button -->
             <div class="dropdown dropdown-start sm:hidden">
                 <label tabindex="0" class="btn btn-ghost btn-circle">
@@ -46,7 +61,6 @@
                     <li><a class="tooltip" data-tip="Flag"><i class="fa-solid fa-flag"></i></a></li>
                 </ul>
             </div>
-
             <div class="flex-1">
                 <!-- Logo -->
                 <a class="btn btn-ghost text-xl">
@@ -96,7 +110,7 @@
                             <!-- Search Bar -->
                             <div class="mt-8">
                                 <div class="flex rounded-full overflow-hidden shadow-lg max-w-lg">
-                                    <input id="search-field" type="text" placeholder="Search here anything"
+                                    <input id="search-field" type="text" placeholder="Search here anything" required
                                         class="w-full p-4 text-gray-800 focus:outline-none">
                                     <button onclick="handleSearch()" class="bg-indigo-500 text-white px-6 py-3 font-semibold">
                                         Search
@@ -130,12 +144,10 @@
                 </div>
             </div>
         </section>
-
     </header>
 
     <!-- Main Part -->
     <main class="max-w-screen-xl mx-auto container mb-5">
-
         <!-- Intro + Card and Sidebar (Title Section) -->
         <section>
             <div class="text-center space-y-4 py-5">
@@ -148,58 +160,13 @@
 
             <!-- Card -->
             <div class="md:flex items-start gap-2 p-1">
+                <!-- Spinner -->
                 <div id="all-post-loading-spinner" class="md:w-2/3 text-center my-20">
                     <span class="loading loading-ring loading-lg"></span>
                 </div>
 
+                <!-- All Post Container -->
                 <div id="all-post-container" class="md:w-2/3">
-                    <!-- <div class="flex items-start bg-gray-100 p-4 rounded-lg m-1">
-                        <div class="flex-shrink-0 mt-1">
-                            <div class="avatar">
-                                <div class="w-16 rounded-3xl">
-                                    <img
-                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                                </div>
-                                <span
-                                    class="absolute top-0 right-0 h-4 w-4 bg-green-600 rounded-full border-2 border-white"></span>
-                            </div>
-                        </div>
-                        <div class="ml-4">
-                            <div class="text-sm text-gray-600 font-medium">
-                                # <span>Music</span>
-                                <span class="ml-3">Author: Awlad Hossain</span>
-                            </div>
-                            <h2 class="text-lg font-bold text-gray-800 mt-1">
-                                10 Kids Unaware of Their Halloween Costume
-                            </h2>
-                            <p class="text-gray-600 mt-1">
-                                It's one thing to subject yourself to ha Halloween costume mishap because, hey that's
-                                your
-                                prerogative
-                            </p>
-                            <div
-                                class="flex justify-between text-gray-500 mt-4 border-t-2 border-gray-300 border-dashed pt-3">
-                                <div class="flex items-center space-x-4">
-                                    <span class="flex items-center justify-center text-sm">
-                                        <i class="fa-solid fa-comment-alt"></i>&nbsp; 560
-                                    </span>
-                                    <span class="flex items-center justify-center text-sm">
-                                        <i class="fa-solid fa-eye"></i>&nbsp; 1,568
-                                    </span>
-                                    <span class="flex items-center justify-center text-sm">
-                                        <i class="fa-solid fa-clock"></i>&nbsp; 5 min
-                                    </span>
-
-                                </div>
-                                <div class="flex items-center space-x-4">
-                                    <span
-                                        class="flex items-center justify-center text-sm h-6 w-6 bg-green-500 rounded-xl">
-                                        <i class="fa-solid fa-envelope-open text-gray-100"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     
                 </div>
 
@@ -216,7 +183,6 @@
                     </ul>
                 </div>
             </div>
-
         </section>
 
         <!-- Join Forum -->
@@ -233,7 +199,6 @@
                                 Share your favorite opinion and win and wp forum coffee mug! Yes, you can run unit tests
                                 and view the results directly within the app.
                             </p>
-                            <!-- Search Bar -->
                             <div class="mt-8">
                                 <button
                                     class="py-3 px-10 bg-btn-color hover:bg-btn-color text-white rounded-full font-bold">
@@ -298,9 +263,9 @@
         </section>
     </footer>
 
-
     <!-- JavaScript Link -->
     <script src="file/JS/app.js"></script>
 </body>
 
 </html>
+ 
