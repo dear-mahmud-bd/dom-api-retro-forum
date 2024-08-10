@@ -3,9 +3,11 @@
 
 // all-post-container
 // latest-post-container
+// mark-as-read-list
+// read-count
 
 
-
+let readCount = 0;
 
 const loadAllPost = async () => {
     const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`);
@@ -56,8 +58,8 @@ const displayAllPost = (allPost) => {
                         </span> 
                     </div>
                     <div class="flex items-center space-x-4">
-                        <span
-                            class="flex items-center justify-center text-sm h-6 w-6 bg-green-500 rounded-xl">
+                        <span onclick="handleMarkAsRead('${post.title.replace(/'/g, "\\'")}', ${post.view_count})"
+                            class="flex items-center justify-center text-sm h-6 w-6 bg-green-500 rounded-xl cursor-pointer">
                             <i class="fa-solid fa-envelope-open text-gray-100"></i>
                         </span>
                     </div>
@@ -67,8 +69,31 @@ const displayAllPost = (allPost) => {
 
         allPostContainer.appendChild(postCard);
     });
-
 };
+
+
+
+const handleMarkAsRead = (title, view_count) =>{
+    // console.log(title,view_count);
+    const markRead = document.getElementById('mark-as-read-list');
+    const createList = document.createElement('li');
+    createList.classList = `flex items-center justify-between text-sm bg-white rounded-lg p-2`;
+    createList.innerHTML = `
+        <span>${title}</span>
+        <span class="flex items-center justify-center text-gray-500">
+            <i class="fa-solid fa-eye"></i><span class="ml-1"> ${view_count.toLocaleString()}</span>
+        </span>
+    `;
+    markRead.appendChild(createList);
+    readCount++;
+    setReadCount();
+};
+
+const setReadCount = () =>{
+    const readCountTag = document.getElementById('read-count');
+    readCountTag.textContent = readCount;
+};
+
 
 
 const loadLatestPost = async () =>{
@@ -77,12 +102,14 @@ const loadLatestPost = async () =>{
     const allPost = data;
     displayLatestPost(allPost);
 };
+loadLatestPost();
+
 const displayLatestPost = (allPost) =>{
-    console.log(allPost);
+    // console.log(allPost);
     const latestPostContainer = document.getElementById('latest-post-container');
-    // latestPostContainer.innerText = '';
+    latestPostContainer.textContent = '';
     allPost.forEach(post => {
-        console.log(post);
+        // console.log(post);
         const postCard = document.createElement('div');
         postCard.classList = `card bg-white border rounded-lg overflow-hidden`;
         postCard.innerHTML = `
@@ -112,33 +139,6 @@ const displayLatestPost = (allPost) =>{
         latestPostContainer.appendChild(postCard);
     });
 };
-
-loadLatestPost();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
