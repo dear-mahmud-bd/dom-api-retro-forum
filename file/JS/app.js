@@ -2,6 +2,8 @@
 // all post:    https://openapi.programming-hero.com/api/retro-forum/posts?category=
 // latest post: https://openapi.programming-hero.com/api/retro-forum/latest-posts 
 
+
+// search-field
 // all-post-loading-spinner
 // latest-post-loading-spinner
 // all-post-container
@@ -12,11 +14,11 @@
 
 let readCount = 0;
 
-const loadAllPost = async () => {
+const loadAllPost = async (category='') => {
     document.getElementById('all-post-loading-spinner').classList.remove('hidden');
     document.getElementById('all-post-container').classList.add('hidden');
 
-    const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`);
+    const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts?category=${category}`);
     const data = await res.json();
     const allPost = data.posts;
 
@@ -29,7 +31,7 @@ const loadAllPost = async () => {
 loadAllPost();
 
 const displayAllPost = (allPost) => {
-    // console.log(allPost);
+    console.log(allPost.length);
     const allPostContainer = document.getElementById('all-post-container');
     // console.log(allPostContainer);
     allPostContainer.textContent = '';
@@ -82,8 +84,6 @@ const displayAllPost = (allPost) => {
     });
 };
 
-
-
 const handleMarkAsRead = (title, view_count) =>{
     // console.log(title,view_count);
     const markRead = document.getElementById('mark-as-read-list');
@@ -104,6 +104,24 @@ const setReadCount = () =>{
     const readCountTag = document.getElementById('read-count');
     readCountTag.textContent = readCount;
 };
+
+
+
+const searchField = document.getElementById('search-field');
+const handleSearch = () => {
+    const searchText = searchField.value;
+    console.log(searchText);
+    loadAllPost(searchText);
+    searchField.value = '';
+};
+// Attach event listener for Enter key press
+searchField.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent form submission if within a form
+        handleSearch();
+    }
+});
+
 
 
 
